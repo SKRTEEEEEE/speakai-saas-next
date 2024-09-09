@@ -1,8 +1,9 @@
-// import {
-//     handleCheckoutSessionCompleted,
-//     handleSubscriptionDeleted,
-//   } from "@/lib/payment-helpers";
-  import { NextRequest, NextResponse } from "next/server";
+import {
+    handleCheckoutSessionCompleted,
+    handleSubscriptionDeleted,
+  } from "@/lib/payment-helpers";
+
+import { NextRequest, NextResponse } from "next/server";
   import Stripe from "stripe";
   
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
@@ -42,7 +43,7 @@
           console.log({ session });
   
           //connect to the db create or update user
-        //   await handleCheckoutSessionCompleted({ session, stripe });
+          await handleCheckoutSessionCompleted({ session, stripe });
           break;
         }
         case "customer.subscription.deleted": {
@@ -50,10 +51,10 @@
           
             
           const subscriptionId = event.data.object.id;
-          const subscription = await stripe.subscriptions.retrieve(subscriptionId)
-          console.log({subscription})
+        //   const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+        //   console.log({subscription})
         // connect to db, update users status to cancelled / revoke access
-        //   await handleSubscriptionDeleted({ subscriptionId, stripe });
+          await handleSubscriptionDeleted({ subscriptionId, stripe });
           break;
         }
         default:
