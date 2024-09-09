@@ -1,5 +1,12 @@
-import { SignIn } from '@clerk/nextjs'
+import BgGradient from "@/components/bg-gradient";
+import { SignIn } from "@clerk/nextjs";
 
 export default function Page() {
-  return <SignIn />
+  return (
+    <section className="flex justify-center items-center py-16">
+      <BgGradient>
+        <SignIn />
+      </BgGradient>
+    </section>
+  );
 }
