@@ -1,5 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 ## [Info](https://innate-noodle-e82.notion.site/AI-SaaS-app-Cheatsheet-SpeakEasy-AI-6fc5a8a999654decb5b3d3262b16ceea)
+### [Error openai ECONRESET](./error-openai.md)
 ## Getting Started
 
 First, run the development server:
