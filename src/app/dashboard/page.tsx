@@ -2,6 +2,7 @@
 import BgGradient from "@/components/bg-gradient";
 import { Badge } from "@/components/ui/badge";
 import UpgradeYourPlan from "@/components/upgrade-plain";
+import UploadForm from "@/components/upload-form";
 import getDbConnection from "@/lib/db";
 import { doesUserExist, getPlanType, hasCancelledSubscription, updateUser } from "@/lib/user-helpers";
 
@@ -76,14 +77,14 @@ export default async function Dashboard() {
             </p>
           )}
 
-          {/* {isValidBasicPlan || isProPlan ? (
+          {isValidBasicPlan || isProPlan ? (
             <BgGradient>
               <UploadForm />
             </BgGradient>
           ) : (
             <UpgradeYourPlan />
-          )} */}
-          {hasUserCancelled && <UpgradeYourPlan/>}
+          )}
+          {/* {hasUserCancelled && <UpgradeYourPlan/>} */}
         </div>
       </div>
     </BgGradient>
