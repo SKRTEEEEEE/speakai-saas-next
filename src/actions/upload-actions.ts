@@ -137,7 +137,7 @@ Here's the transcription to convert: ${transcriptions}`,
       },
     ],
     model: "gpt-4o-mini",
-    temperature: 0.7,
+    temperature: 0.7, 
     max_tokens: 1000,
   });
 
