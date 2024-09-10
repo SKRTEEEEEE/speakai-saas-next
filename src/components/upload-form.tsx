@@ -4,12 +4,11 @@ import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
-// import {
-//   generateBlogPostAction,
-//   transcribeUploadedFile,
-// } from "@/actions/upload-actions";
 import { useUploadThing } from "@/utils/uploadthing";
-import { generateBlogPostAction, transcribeUploadedFile } from "@/actions/upload-actions";
+import {
+  generateBlogPostAction,
+  transcribeUploadedFile,
+} from "@/actions/upload-actions";
 
 const schema = z.object({
   file: z
@@ -28,7 +27,6 @@ const schema = z.object({
 export default function UploadForm() {
   const { toast } = useToast();
 
-  //"videoOrAudioUploader" esta definido en el core
   const { startUpload } = useUploadThing("videoOrAudioUploader", {
     onClientUploadComplete: () => {
       toast({ title: "uploaded successfully!" });

@@ -11,9 +11,28 @@ import { redirect } from "next/navigation";
 
 // 🧠 💡 CREO que hay que mirar el caso en que el usuario se a cancelado la suscripción
 
+// import fetch from 'node-fetch';
+
+// async function testOpenAIConnection() {
+//   try {
+//     const response = await fetch('https://api.openai.com/v1/models', {
+//       method: 'GET',
+//       headers: {
+//         'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+//       },
+//     });
+//     const data = await response.json();
+//     console.log('API Test Response:', data);
+//   } catch (error) {
+//     console.error('Error testing OpenAI connection:', error);
+//   }
+// }
+
+
+
 export default async function Dashboard() {
   const clerkUser = await currentUser();
-
+  // testOpenAIConnection();
   if (!clerkUser) {
     return redirect("/sign-in");
   }

@@ -10,6 +10,7 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import { Toaster } from "@/components/ui/toaster";
 const fontSans = FontSans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
@@ -33,6 +34,8 @@ export default function RootLayout({
           <Header />
       
           {children}
+          <Toaster />
+
         </body>
       </html>
     </ClerkProvider>

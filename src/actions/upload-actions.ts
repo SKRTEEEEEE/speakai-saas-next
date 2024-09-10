@@ -7,13 +7,25 @@ import OpenAI from "openai";
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
+const verifyConnection = async () => {
+  try {
+    console.log("Verifying connection with OpenAI...");
+    const response = await openai.models.list(); // Use simply endpoint for verify connection
+    console.log("Connection verified. Response:", response);
+  } catch (error) {
+    console.error("Error verifying connection:", error);
+  }
+};
 
 export async function transcribeUploadedFile(
   resp: {
     serverData: { userId: string; file: any };
   }[]
 ) {
+  console.log("Received response:", resp); 
+  
   if (!resp) {
+    console.log("No response, returning error");
     return {
       success: false,
       message: "File upload failed",
@@ -28,32 +40,40 @@ export async function transcribeUploadedFile(
     },
   } = resp[0];
 
+  console.log("File URL:", fileUrl); 
+  console.log("File name:", fileName); 
+
   if (!fileUrl || !fileName) {
+    console.log("Missing file URL or file name, returning error");
     return {
       success: false,
       message: "File upload failed",
       data: null,
     };
   }
-  //Hacemos fetch del file porque actualmente tenemos la url
-  const response = await fetch(fileUrl);
 
   try {
+    console.log("Fetching the file from URL...");
+    const response = await fetch(fileUrl);
+    console.log("File fetched successfully:", response); // Verify fetch
+    verifyConnection()
+    // NOT PASS THIS POINT ERR: ECONNRESET
     const transcriptions = await openai.audio.transcriptions.create({
       model: "whisper-1",
       file: response,
     });
-
-    console.log({ transcriptions });
+    
+    console.log("Transcriptions result:", transcriptions); 
     return {
       success: true,
       message: "File uploaded successfully!",
       data: { transcriptions, userId },
     };
   } catch (error) {
-    console.error("Error processing file", error);
+    console.error("Error processing file:", error); 
 
     if (error instanceof OpenAI.APIError && error.status === 413) {
+      console.log("File size exceeds the max limit of 20MB");
       return {
         success: false,
         message: "File size exceeds the max limit of 20MB",
@@ -68,7 +88,8 @@ export async function transcribeUploadedFile(
     };
   }
 }
-//3.50
+
+//3.50 min
 
 async function saveBlogPost(userId: string, title: string, content: string) {
   try {
@@ -136,8 +157,8 @@ Please convert the following transcription into a well-structured blog post usin
 Here's the transcription to convert: ${transcriptions}`,
       },
     ],
-    model: "gpt-4o-mini",
-    temperature: 0.7, 
+    model: "gpt-3.5-turbo",
+    temperature: 0.7,
     max_tokens: 1000,
   });
 
