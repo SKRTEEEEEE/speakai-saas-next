@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 //   transcribeUploadedFile,
 // } from "@/actions/upload-actions";
 import { useUploadThing } from "@/utils/uploadthing";
+import { generateBlogPostAction, transcribeUploadedFile } from "@/actions/upload-actions";
 
 const schema = z.object({
   file: z
@@ -76,34 +77,34 @@ export default function UploadForm() {
           "Hang tight! Our digital wizards are sprinkling magic dust on your file! ✨",
       });
 
-    //   const result = await transcribeUploadedFile(resp);
-    //   const { data = null, message = null } = result || {};
+      const result = await transcribeUploadedFile(resp);
+      const { data = null, message = null } = result || {};
 
-    //   if (!result || (!data && !message)) {
-    //     toast({
-    //       title: "An unexpected error occurred",
-    //       description:
-    //         "An error occurred during transcription. Please try again.",
-    //     });
-    //   }
+      if (!result || (!data && !message)) {
+        toast({
+          title: "An unexpected error occurred",
+          description:
+            "An error occurred during transcription. Please try again.",
+        });
+      }
 
-    //   if (data) {
-    //     toast({
-    //       title: "🤖 Generating AI blog post...",
-    //       description: "Please wait while we generate your blog post.",
-    //     });
+      if (data) {
+        toast({
+          title: "🤖 Generating AI blog post...",
+          description: "Please wait while we generate your blog post.",
+        });
 
-    //     await generateBlogPostAction({
-    //       transcriptions: data.transcriptions,
-    //       userId: data.userId,
-    //     });
+        await generateBlogPostAction({
+          transcriptions: data.transcriptions,
+          userId: data.userId,
+        });
 
-    //     toast({
-    //       title: "🎉 Woohoo! Your AI blog is created! 🎊",
-    //       description:
-    //         "Time to put on your editor hat, Click the post and edit it!",
-    //     });
-    //   }
+        toast({
+          title: "🎉 Woohoo! Your AI blog is created! 🎊",
+          description:
+            "Time to put on your editor hat, Click the post and edit it!",
+        });
+      }
     }
   };
   return (
